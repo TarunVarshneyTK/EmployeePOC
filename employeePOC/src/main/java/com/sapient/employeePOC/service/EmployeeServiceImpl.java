@@ -49,6 +49,10 @@ public class EmployeeServiceImpl implements EmployeeService {
             e1.setSalary(e1.getSalary() + e1.getSalary() * perct);
             return e1;
         }).collect(Collectors.toList());
+
+        if(employeeSalaryUpdatedList.size()==0)
+            throw new NoRecordFoundException();
+
         employeeSalaryUpdatedList.stream().forEach(a -> employeeCacheDao.updateEmployeeList(a));
         return employeeSalaryUpdatedList;
     }
