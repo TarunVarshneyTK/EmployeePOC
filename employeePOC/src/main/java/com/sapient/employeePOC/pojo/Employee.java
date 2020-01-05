@@ -66,11 +66,14 @@ public class Employee implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return empId.equals(employee.empId);
+        return Float.compare(employee.salary, salary) == 0 &&
+                empId.equals(employee.empId) &&
+                name.equals(employee.name) &&
+                Objects.equals(place, employee.place);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(empId);
+        return Objects.hash(empId, name, place, salary);
     }
 }
