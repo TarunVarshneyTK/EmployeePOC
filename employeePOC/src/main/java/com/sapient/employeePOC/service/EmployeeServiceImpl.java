@@ -1,5 +1,6 @@
 package com.sapient.employeePOC.service;
 
+import com.sapient.employeePOC.Exception.NoRecordFoundException;
 import com.sapient.employeePOC.dao.EmployeeCacheDao;
 import com.sapient.employeePOC.pojo.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,26 +23,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     EmployeeCacheDao employeeCacheDao;
 
     @PostConstruct
-    public void init() throws IOException {
+    public void init() throws IOException, NoRecordFoundException {
         Resource resource = resourceLoader.getResource("classpath:" + "Employee.csv");
         BufferedReader br = null;
         employeeCacheDao.getAllEmployee(resource.getInputStream());
     }
 
     @Override
-    public ArrayList<Employee> getAllEmployee() {
+    public ArrayList<Employee> getAllEmployee() throws NoRecordFoundException {
         return new ArrayList<Employee>(employeeCacheDao.getAllEmployees().values());
     }
 
 
     @Override
-    public Employee getEmployee(String empId) {
+    public Employee getEmployee(String empId) throws NoRecordFoundException {
         return employeeCacheDao.getEmployeeById(empId);
     }
 
 
     @Override
-    public List<Employee> updateEmpSalaryBasedOnPlace(String place, String percentage) {
+    public List<Employee> updateEmpSalaryBasedOnPlace(String place, String percentage) throws NoRecordFoundException {
         ArrayList<Employee> employeeList = getAllEmployee();
         float perct = Float.valueOf(percentage) / 100;
         List<Employee> employeeSalaryUpdatedList = employeeList.stream().filter(e -> e.getPlace().equalsIgnoreCase(place)).map(e1 -> {

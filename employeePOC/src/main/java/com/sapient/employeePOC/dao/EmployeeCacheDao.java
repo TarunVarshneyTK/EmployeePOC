@@ -1,5 +1,6 @@
 package com.sapient.employeePOC.dao;
 
+import com.sapient.employeePOC.Exception.NoRecordFoundException;
 import com.sapient.employeePOC.pojo.Employee;
 
 import java.io.InputStream;
@@ -11,9 +12,9 @@ public interface EmployeeCacheDao {
 
     Employee saveEmployee(Employee employee);
 
-    Map<String, Employee> getAllEmployees();
+    Map<String, Employee> getAllEmployees() throws NoRecordFoundException;
 
     void updateEmployeeList(Employee employee);
 
-    Employee getEmployeeById(String empId);
+    Employee getEmployeeById(String empId) throws NoRecordFoundException;
 }

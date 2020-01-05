@@ -1,5 +1,6 @@
 package com.sapient.employeePOC.dao;
 
+import com.sapient.employeePOC.Exception.NoRecordFoundException;
 import com.sapient.employeePOC.pojo.Employee;
 import com.sapient.employeePOC.util.CSVutill;
 import org.junit.jupiter.api.Assertions;
@@ -41,7 +42,7 @@ public class EmployeeDaoTest {
     }
 
     @Test
-    void getAllEmployeeTest() {
+    void getAllEmployeeTest() throws NoRecordFoundException {
         ArrayList<Employee> l = new ArrayList<>();
         l.add(new Employee("1", "Tarun", "MP", 50000));
         l.add(new Employee("1", "Anil", "Punjab", 40000));

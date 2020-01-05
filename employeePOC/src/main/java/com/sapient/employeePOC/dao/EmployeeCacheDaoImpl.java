@@ -1,5 +1,6 @@
 package com.sapient.employeePOC.dao;
 
+import com.sapient.employeePOC.Exception.NoRecordFoundException;
 import com.sapient.employeePOC.pojo.Employee;
 import com.sapient.employeePOC.util.CSVutill;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,11 @@ public class EmployeeCacheDaoImpl implements EmployeeCacheDao {
     }
 
     @Override
-    public Map<String, Employee> getAllEmployees() {
-        return hashOperations.entries("employee");
+    public Map<String, Employee> getAllEmployees() throws NoRecordFoundException {
+        Map employeesMap = hashOperations.entries("employee");
+        if (employeesMap.isEmpty())
+            throw new NoRecordFoundException();
+        return employeesMap;
     }
 
     @Override
@@ -50,7 +54,10 @@ public class EmployeeCacheDaoImpl implements EmployeeCacheDao {
     }
 
     @Override
-    public Employee getEmployeeById(String empId) {
-        return (Employee) hashOperations.get("employee", empId);
+    public Employee getEmployeeById(String empId) throws NoRecordFoundException {
+        Employee employeeDetail = (Employee) hashOperations.get("employee", empId);
+        if (employeeDetail == null)
+            throw new NoRecordFoundException();
+        return employeeDetail;
     }
 }

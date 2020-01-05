@@ -1,5 +1,6 @@
 package com.sapient.employeePOC.controller;
 
+import com.sapient.employeePOC.Exception.NoRecordFoundException;
 import com.sapient.employeePOC.pojo.Employee;
 import com.sapient.employeePOC.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,17 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @RequestMapping(value = "/employee/place/{place}/salary/{percentage}", method = RequestMethod.PUT)
-    public List<Employee> updateEmpSalary(@PathVariable String place, @PathVariable String percentage) {
+    public List<Employee> updateEmpSalary(@PathVariable String place, @PathVariable String percentage) throws NoRecordFoundException {
         return employeeService.updateEmpSalaryBasedOnPlace(place, percentage);
     }
 
     @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    public ArrayList<Employee> getEmployeeList() {
+    public ArrayList<Employee> getEmployeeList() throws NoRecordFoundException {
         return employeeService.getAllEmployee();
     }
 
     @RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
-    public Employee getEmployee(@PathVariable String id) {
+    public Employee getEmployee(@PathVariable String id) throws NoRecordFoundException {
         return employeeService.getEmployee(id);
     }
 
