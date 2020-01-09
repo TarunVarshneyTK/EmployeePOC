@@ -25,9 +25,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @PostConstruct
     public void init() throws IOException, NoRecordFoundException {
         Resource resource = resourceLoader.getResource("classpath:" + "Employee.csv");
-        BufferedReader br = null;
         employeeCacheDao.getAllEmployee(resource.getInputStream());
+
     }
+
 
     @Override
     public ArrayList<Employee> getAllEmployee() throws NoRecordFoundException {
@@ -50,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             return e1;
         }).collect(Collectors.toList());
 
-        if(employeeSalaryUpdatedList.size()==0)
+        if (employeeSalaryUpdatedList.size() == 0)
             throw new NoRecordFoundException();
 
         employeeSalaryUpdatedList.stream().forEach(a -> employeeCacheDao.updateEmployeeList(a));

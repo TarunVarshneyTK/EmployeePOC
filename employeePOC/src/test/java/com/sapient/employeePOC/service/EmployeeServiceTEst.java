@@ -1,6 +1,7 @@
 package com.sapient.employeePOC.service;
 
 import com.sapient.employeePOC.Exception.NoRecordFoundException;
+import com.sapient.employeePOC.conf.RedisProperties;
 import com.sapient.employeePOC.dao.EmployeeCacheDaoImpl;
 import com.sapient.employeePOC.pojo.Employee;
 import org.junit.jupiter.api.Assertions;
@@ -11,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -18,9 +20,14 @@ import java.util.ArrayList;
 import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(SpringExtension.class)
+@SpringBootTest
+
 public class EmployeeServiceTest {
     @Mock
     EmployeeCacheDaoImpl employeeCacheDao;
+
+ /*   @Mock
+    RedisProperties redisProperties;*/
 
     @InjectMocks
     @Spy
@@ -34,6 +41,7 @@ public class EmployeeServiceTest {
         l.add(new Employee("1", "Raj", "Rajsthan", 35000));
         Mockito.doReturn(l).when(employeeService).getAllEmployee();
         Mockito.doNothing().when(employeeCacheDao).updateEmployeeList(any());
+       // Mockito.doReturn(6370).when(redisProperties.getRedisHost());
     }
 
     @Test
